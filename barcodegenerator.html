@@ -1,0 +1,129 @@
+<!-- Author: Pavan Kumar Tummala-->
+<html>
+<body>
+	<title>barcode generator</title>
+<script>
+/**
+ * @author Pavan Kumar Tummala
+ **/
+
+NHTSA_API_URL="https://vpic.nhtsa.dot.gov/api/" //United States Department of Transportation API url
+
+VINDECODE_URL=NHTSA_API_URL+"vehicles/DecodeVin/" //URL path for vin decoder
+
+function bar(){
+const vin = document.getElementById("vintext").value
+barcodelink = generatelink(vin)
+var image_source = document.getElementById("image")
+var image_source_qr = document.getElementById("qrcode")
+image_source.src=barcodelink
+image_source_qr.src =""
+}
+
+function qr(){
+	const vin = document.getElementById("vintext").value
+	barcodelink = generatelinkqr(vin)
+	var image_source = document.getElementById("qrcode")
+	var image_source_bar = document.getElementById("image")
+	image_source.src=barcodelink
+	image_source_bar.src =""
+}
+
+function barurl(){
+	const vin_number = document.getElementById("vintext").value
+	url= generatelink(vin_number)
+	var holder = document.getElementById("outurl")
+	holder.innerText=url
+}
+
+function qrurl(){
+	const vin_number = document.getElementById("vintext").value
+	url= generatelinkqr(vin_number)
+	var holder = document.getElementById("outurl")
+	holder.innerText=url
+}
+
+function generatelink(VIN){
+	urlfirst="https://barcode.tec-it.com/barcode.ashx?data="
+	urllast="&code=Code128&multiplebarcodes=false&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0"
+	url=urlfirst+VIN+urllast
+	return url
+}
+function generatelinkqr(VIN){
+	urlfirst="https://barcode.tec-it.com/barcode.ashx?data="
+	urllast="&code=QRCode&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0&eclevel=L"
+	url=urlfirst+VIN+urllast
+	return url
+}
+
+function DecodeVin(){										//VIN decode Function
+	var format = "?format=json"
+	const vin_number = document.getElementById("vintext").value
+	var vin = vin_number.trim()
+	var url = VINDECODE_URL+vin_number+format
+	var xmlHttp = new XMLHttpRequest()
+	xmlHttp.open( "GET", url, false )
+	xmlHttp.send( null )
+    var vin_data =  xmlHttp.responseText
+	var json_data = JSON.parse(vin_data)
+	var results = json_data.Results
+	var ymm = results[9].Value+" "+results[6].Value+" "+results[8].Value+"\n\n"
+	var vehicle_data = ""
+	vehicle_data +="Year --  "; vehicle_data += results[9].Value+"  ||  "
+	vehicle_data +="Make --  "; vehicle_data += results[6].Value+"  ||  "
+	vehicle_data +="Model --  "; vehicle_data += results[8].Value+"  ||  "
+	vehicle_data +="Trim --  "; vehicle_data += results[12].Value+"  ||  "
+	vehicle_data +="Series -- "; vehicle_data += results[11].Value+"  ||  "
+	vehicle_data +="Engine_model --  "; vehicle_data += results[73].Value+"  ||  "
+	vehicle_data +="Engine_cylinders --  ";vehicle_data += results[68].Value+"  ||  "
+	vehicle_data +="Fuel_type --  "; vehicle_data += results[75].Value+"  ||  "
+	vehicle_data +="Transmission_style --  " ;vehicle_data += results[47].Value+"  ||  "
+	vehicle_data +="Transmission_speed --  " ;vehicle_data += results[48].Value+"  ||  "
+	vehicle_data +="Drive_type --  "; vehicle_data += results[49].Value+"  ||  "
+	vehicle_data +="Doors --  "; vehicle_data += results[22].Value+"  ||  "
+	vehicle_data +="Body_class --  "; vehicle_data += results[21].Value+"  ||  "
+	vehicle_data +="Vehicle_type --  "; vehicle_data += results[13].Value+" ||  "
+	
+	var holder = document.getElementById("outurl2")
+	holder.innerText= ymm+vehicle_data
+}
+
+function random(){
+const iframe = document.getElementById('randomvin');
+iframe.src = iframe.src;
+}
+
+</script>
+<iframe id="randomvin" src="http://randomvin.com/getvin.php?type=real"></iframe>
+
+<button onclick="random()">randomvin</button>
+
+<center><img id="image"
+       src=''/><br/><br/><br/>
+	   <img id="qrcode"
+		 src=''><br/><br/><br/>
+		 <output type="text" id="outurl2"></output>
+		 <br/>
+		 <br/><br/>
+<button onclick="bar()">generate Barcode</button>
+<button onclick="qr()">generate QRcode</button>
+<br/>
+<br/>
+
+<form>
+<input type="text" id="vintext" placeholder="VIN">
+</form><br/><br/>
+<button onclick="barurl()">Barcode URL</button>
+<button onclick="qrurl()">QR code URL</button><br/><br/>
+<br/>
+<button onclick="DecodeVin()">Decode VIN</button><br/>
+<br/><br/>
+<output type="text" id="outurl"></output>
+
+</center>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<center><footer>
+  <p>links are from TEC-IT Barcode Generator</p>
+</footer> </center>
+</body>
+</html>
