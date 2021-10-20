@@ -11,6 +11,8 @@ NHTSA_API_URL="https://vpic.nhtsa.dot.gov/api/" //United States Department of Tr
 
 VINDECODE_URL=NHTSA_API_URL+"vehicles/DecodeVin/" //URL path for vin decoder
 
+//function that dynamically generates the link and fetches the barcode image url
+
 function bar(){
 const vin = document.getElementById("vintext").value
 barcodelink = generatelink(vin)
@@ -19,6 +21,8 @@ var image_source_qr = document.getElementById("qrcode")
 image_source.src=barcodelink
 image_source_qr.src =""
 }
+
+//function that dynamically generates the link and fetches the QR code image url
 
 function qr(){
 	const vin = document.getElementById("vintext").value
@@ -29,12 +33,16 @@ function qr(){
 	image_source_bar.src =""
 }
 
+//function for ouputting the barcode
+
 function barurl(){
 	const vin_number = document.getElementById("vintext").value
 	url= generatelink(vin_number)
 	var holder = document.getElementById("outurl")
 	holder.innerText=url
 }
+
+//function for ouputting the QR code
 
 function qrurl(){
 	const vin_number = document.getElementById("vintext").value
@@ -43,12 +51,17 @@ function qrurl(){
 	holder.innerText=url
 }
 
+//generates url for barcode
+
 function generatelink(VIN){
 	urlfirst="https://barcode.tec-it.com/barcode.ashx?data="
 	urllast="&code=Code128&multiplebarcodes=false&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0"
 	url=urlfirst+VIN+urllast
 	return url
 }
+
+//generates url for QR code
+
 function generatelinkqr(VIN){
 	urlfirst="https://barcode.tec-it.com/barcode.ashx?data="
 	urllast="&code=QRCode&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0&eclevel=L"
@@ -56,7 +69,9 @@ function generatelinkqr(VIN){
 	return url
 }
 
-function DecodeVin(){										//VIN decode Function
+//VIN decode Function
+
+function DecodeVin(){										
 	var format = "?format=json"
 	const vin_number = document.getElementById("vintext").value
 	var vin = vin_number.trim()
@@ -69,24 +84,26 @@ function DecodeVin(){										//VIN decode Function
 	var results = json_data.Results
 	var ymm = results[9].Value+" "+results[6].Value+" "+results[8].Value+"\n\n"
 	var vehicle_data = ""
-	vehicle_data +="Year --  "; vehicle_data += results[9].Value+"  ||  "
-	vehicle_data +="Make --  "; vehicle_data += results[6].Value+"  ||  "
-	vehicle_data +="Model --  "; vehicle_data += results[8].Value+"  ||  "
-	vehicle_data +="Trim --  "; vehicle_data += results[12].Value+"  ||  "
-	vehicle_data +="Series -- "; vehicle_data += results[11].Value+"  ||  "
-	vehicle_data +="Engine_model --  "; vehicle_data += results[73].Value+"  ||  "
-	vehicle_data +="Engine_cylinders --  ";vehicle_data += results[68].Value+"  ||  "
-	vehicle_data +="Fuel_type --  "; vehicle_data += results[75].Value+"  ||  "
-	vehicle_data +="Transmission_style --  " ;vehicle_data += results[47].Value+"  ||  "
-	vehicle_data +="Transmission_speed --  " ;vehicle_data += results[48].Value+"  ||  "
-	vehicle_data +="Drive_type --  "; vehicle_data += results[49].Value+"  ||  "
-	vehicle_data +="Doors --  "; vehicle_data += results[22].Value+"  ||  "
-	vehicle_data +="Body_class --  "; vehicle_data += results[21].Value+"  ||  "
-	vehicle_data +="Vehicle_type --  "; vehicle_data += results[13].Value+" ||  "
+	vehicle_data +="Year --  "; vehicle_data += results[9].Value+"  ||  ";
+	vehicle_data +="Make --  "; vehicle_data += results[6].Value+"  ||  ";
+	vehicle_data +="Model --  "; vehicle_data += results[8].Value+"  ||  ";
+	vehicle_data +="Trim --  "; vehicle_data += results[12].Value+"  ||  ";
+	vehicle_data +="Series -- "; vehicle_data += results[11].Value+"  ||  ";
+	vehicle_data +="Engine_model --  "; vehicle_data += results[73].Value+"  ||  ";
+	vehicle_data +="Engine_cylinders --  ";vehicle_data += results[68].Value+"  ||  ";
+	vehicle_data +="Fuel_type --  "; vehicle_data += results[75].Value+"  ||  ";
+	vehicle_data +="Transmission_style --  " ;vehicle_data += results[47].Value+"  ||  ";
+	vehicle_data +="Transmission_speed --  " ;vehicle_data += results[48].Value+"  ||  ";
+	vehicle_data +="Drive_type --  "; vehicle_data += results[49].Value+"  ||  ";
+	vehicle_data +="Doors --  "; vehicle_data += results[22].Value+"  ||  ";
+	vehicle_data +="Body_class --  "; vehicle_data += results[21].Value+"  ||  ";
+	vehicle_data +="Vehicle_type --  "; vehicle_data += results[13].Value+" ||  ";
 	
 	var holder = document.getElementById("outurl2")
 	holder.innerText= ymm+vehicle_data
 }
+
+//function to reload the random_VIN_generation iframe
 
 function random(){
 const iframe = document.getElementById('randomvin');
@@ -123,7 +140,7 @@ iframe.src = iframe.src;
 </center>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <center><footer>
-  <p>links are from TEC-IT Barcode Generator</p>
+  <p>links are from <a href="https://barcode.tec-it.com/en">TEC-IT Barcode Generator</a></p>
 </footer> </center>
 </body>
 </html>
