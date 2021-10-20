@@ -35,15 +35,16 @@ NHTSA_API_URL="https://vpic.nhtsa.dot.gov/api/" //United States Department of Tr
 
 VINDECODE_URL=NHTSA_API_URL+"vehicles/DecodeVin/" //URL path for vin decoder
 
+RANDVIN_URL = "http://randomvin.com/getvin.php?type=real" //random VIN generator
 //function that dynamically generates the link and fetches the barcode image url
 
 function bar(){
-const vin = document.getElementById("vintext").value
-barcodelink = generatelink(vin)
-var image_source = document.getElementById("image")
-var image_source_qr = document.getElementById("qrcode")
-image_source.src=barcodelink
-image_source_qr.src =""
+	const vin = document.getElementById("vintext").value
+	barcodelink = generatelink(vin)
+	var image_source = document.getElementById("image")
+	var image_source_qr = document.getElementById("qrcode")
+	image_source.src=barcodelink
+	image_source_qr.src =""
 }
 
 //function that dynamically generates the link and fetches the QR code image url
@@ -130,14 +131,13 @@ function DecodeVin(){
 //function to reload the random_VIN_generation iframe
 
 function random(){
-const iframe = document.getElementById('randomvin');
-iframe.src = iframe.src;
+	const iframe = document.getElementById('randomvin');
+	iframe.src = iframe.src;
 }
 
 </script>
 <iframe class="iframe" id="randomvin" src="http://randomvin.com/getvin.php?type=real"></iframe>
 <button id="randomvin_button" onclick="random()">randomvin</button>
-
 <center><img id="image"
        src=''/><br/><br/><br/>
 	   <img id="qrcode"
