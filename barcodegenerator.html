@@ -1,5 +1,29 @@
 <!-- Author: Pavan Kumar Tummala-->
 <html>
+	<head>
+		<style>
+
+			.iframe	{
+				height : 40px;
+				width : 200px;
+				padding : 1px;
+			}
+
+			.urlbutton {
+				height : 3%;
+				width : 8%;
+				overflow : hidden;
+			}
+
+			.generatebutton {
+				height : 4%;
+				width : 10%;
+				overflow : hidden;
+			}
+			
+
+		</style>
+	</head>
 <body>
 	<title>barcode generator</title>
 <script>
@@ -111,9 +135,8 @@ iframe.src = iframe.src;
 }
 
 </script>
-<iframe id="randomvin" src="http://randomvin.com/getvin.php?type=real"></iframe>
-
-<button onclick="random()">randomvin</button>
+<iframe class="iframe" id="randomvin" src="http://randomvin.com/getvin.php?type=real"></iframe>
+<button id="randomvin_button" onclick="random()">randomvin</button>
 
 <center><img id="image"
        src=''/><br/><br/><br/>
@@ -122,19 +145,19 @@ iframe.src = iframe.src;
 		 <output type="text" id="outurl2"></output>
 		 <br/>
 		 <br/><br/>
-<button onclick="bar()">generate Barcode</button>
-<button onclick="qr()">generate QRcode</button>
+<button class="generatebutton" onclick="bar()">generate Barcode</button>
+<button class="generatebutton" onclick="qr()">generate QRcode</button>
 <br/>
 <br/>
 
 <form>
-<input type="text" id="vintext" placeholder="VIN">
-</form><br/><br/>
-<button onclick="barurl()">Barcode URL</button>
-<button onclick="qrurl()">QR code URL</button><br/><br/>
+<input class="textbox_vin" type="text" id="vintext" placeholder="VIN">
+</form><br/>
+<button class="urlbutton" onclick="barurl()">Barcode URL</button>
+<button class="urlbutton" onclick="qrurl()">QR code URL</button><br/><br/>
 <br/>
-<button onclick="DecodeVin()">Decode VIN</button><br/>
-<br/><br/>
+<button class="decodevinbutton" onclick="DecodeVin()">Decode VIN</button><br/>
+<br/>
 <output type="text" id="outurl"></output>
 
 </center>
