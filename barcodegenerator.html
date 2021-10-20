@@ -2,25 +2,38 @@
 <html>
 	<head>
 		<style>
+			/*body{font-family: 'Lucida Sans Unicode';}*/
 
 			.iframe	{
 				height : 40px;
-				width : 200px;
-				padding : 1px;
+				width: 200px;
+				padding : 2px;
+				font-family: 'Lucida Sans Unicode'; 
 			}
 
 			.urlbutton {
-				height : 3%;
-				width : 8%;
-				overflow : hidden;
+
+				font-family: 'Lucida Sans Unicode';
+			}
+			.decodevinbutton {
+
+				font-family: 'Lucida Sans Unicode';
 			}
 
 			.generatebutton {
-				height : 4%;
-				width : 10%;
-				overflow : hidden;
+
+				font-family: 'Lucida Sans Unicode';
 			}
 			
+			.textbox_vin{
+
+				font-family: 'Lucida Sans Unicode';
+			}
+
+			.randomvin_button{
+
+				font-family: 'Lucida Sans Unicode';
+			}
 
 		</style>
 	</head>
@@ -136,8 +149,7 @@ iframe.src = iframe.src;
 
 </script>
 <iframe class="iframe" id="randomvin" src="http://randomvin.com/getvin.php?type=real"></iframe>
-<button id="randomvin_button" onclick="random()">randomvin</button>
-
+<button class="randomvin_button" onclick="random()">random vin</button>
 <center><img id="image"
        src=''/><br/><br/><br/>
 	   <img id="qrcode"
