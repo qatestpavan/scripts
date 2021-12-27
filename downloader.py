@@ -1,14 +1,14 @@
 import requests
 import csv
 import sys
+import argparse
+import time
 
-inputFile = sys.argv[1]
-
-def download(name,url):
+def download(name,url,outPath):
     
     response = requests.get(url)
     extension = response.headers["Content-Type"].split("/")[-1]
-    fileName = ".\\Output\\"+name+"."+extension
+    fileName = outPath+"\\"+name+"."+extension
     with open(fileName,"wb") as imageFile:
         imageFile.write(response.content)
         print(f"[+] Created the file {fileName}")
@@ -30,10 +30,29 @@ def reader(dataFile):
 
 def main():
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", help = "This option is for entering input file", type=str)
+    parser.add_argument("--output", help  = "Output File path need to be added, y default current directory is taken", type=str)
+    parser.add_argument("--namecol",help = "The ouput filename in the given CSV file", type=str)
+    parser.add_argument("--urlcol",help = "The url column in the given CSV file", type=str)
+    args = parser.parse_args()
+
+    #global inputFile , nameColumn , urlColumn ,outPath
+
+    inputFile = args.input
+    nameColumn = args.namecol
+    urlColumn = args.urlcol
+    outPath = ''
+    if args.output:
+        outPath = args.output
+    
     playersData = reader(inputFile)
+    startTime = time.time()
     for i in playersData:
-        download(i["Player Name"],i["Image URL"])
-        
+        download(i[nameColumn],i[urlColumn],outPath)
+
+    print(f"--------------------------\nIt took {time.time()-startTime} seconds.")
+
     exit()
 
 
